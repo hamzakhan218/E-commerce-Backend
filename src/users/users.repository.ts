@@ -9,7 +9,12 @@ export class UserRepository {
 	constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
 	async getUserById(id: string): Promise<User | undefined> {
-		return await this.userModel.findById(id);
+		try {
+			const users = await this.userModel.findById(id);
+			return users;
+		} catch (error) {
+			return undefined;
+		}
 	}
 	async find(userFilterQuery: FilterQuery<User>): Promise<User[] | []> {
 		return await this.userModel.find(userFilterQuery);
