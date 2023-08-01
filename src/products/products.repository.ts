@@ -38,7 +38,9 @@ export class ProductRepository {
 			createProductDto.price === undefined ||
 			createProductDto.publishDate === undefined ||
 			createProductDto.OwnerId === undefined ||
-			createProductDto.description === undefined
+			createProductDto.description === undefined ||
+			createProductDto.category === undefined ||
+			createProductDto.stock === undefined
 		) {
 			return undefined;
 		} else {

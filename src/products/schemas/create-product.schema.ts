@@ -28,6 +28,12 @@ export class Product {
 	description: string;
 
 	@Prop()
+	category: string;
+
+	@Prop()
+	stock: number;
+
+	@Prop()
 	reviews: productType[];
 }
 

@@ -12,5 +12,7 @@ export class CreateProductDto {
 	publishDate: string;
 	OwnerId: string;
 	description: string;
+	category: string;
+	stock: number;
 	reviews: productType[];
 }
