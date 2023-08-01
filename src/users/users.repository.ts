@@ -5,27 +5,31 @@ import { FilterQuery, Model } from "mongoose";
 
 @Injectable()
 export class UserRepository {
+	// eslint-disable-next-line prettier/prettier
 	constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-	async getUserById(id: string): Promise<User> {
+	async getUserById(id: string): Promise<User | undefined> {
 		return await this.userModel.findById(id);
 	}
-	async find(userFilterQuery: FilterQuery<User>): Promise<User[]> {
+	async find(userFilterQuery: FilterQuery<User>): Promise<User[] | []> {
 		return await this.userModel.find(userFilterQuery);
 	}
 
-	async create(user: User): Promise<User> {
+	async create(user: User): Promise<User | undefined> {
 		const newUser = new this.userModel(user);
 		return await newUser.save();
 	}
 
-	async deleteUser(id: string): Promise<User> {
+	async deleteUser(id: string): Promise<User | undefined> {
 		return await this.userModel.findByIdAndDelete(id);
 	}
 	async findOneAndUpdate(
 		userFilterQuery: FilterQuery<User>,
 		user: Partial<User>
-	): Promise<User> {
+	): Promise<User | undefined> {
 		return await this.userModel.findOneAndUpdate(userFilterQuery, user);
+	}
+	async findUserByEmail(email: string): Promise<User | undefined> {
+		return await this.userModel.findOne({ email });
 	}
 }

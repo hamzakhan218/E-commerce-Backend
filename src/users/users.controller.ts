@@ -8,7 +8,7 @@ export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
 	@Get()
-	async getUsers(): Promise<User[]> {
+	async getUsers(): Promise<User[] | []> {
 		return this.usersService.getUsers();
 	}
 
@@ -18,12 +18,12 @@ export class UsersController {
 	}
 
 	@Get(":id")
-	async getUserById(@Param("id") id: string): Promise<User> {
+	async getUserById(@Param("id") id: string): Promise<User | undefined> {
 		return this.usersService.getUserById(id);
 	}
 
 	@Delete(":id")
-	async deleteUser(@Param("id") id: string): Promise<User> {
+	async deleteUser(@Param("id") id: string): Promise<User | undefined> {
 		return this.usersService.deleteUser(id);
 	}
 }
