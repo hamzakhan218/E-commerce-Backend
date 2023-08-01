@@ -10,15 +10,15 @@ import * as argon2 from "argon2";
 export class UsersService {
 	constructor(private readonly userRepository: UserRepository) {}
 
-	async getUserById(userId: string): Promise<User> {
+	async getUserById(userId: string): Promise<User | undefined> {
 		return await this.userRepository.getUserById(userId);
 	}
 
-	async getUsers(): Promise<User[]> {
+	async getUsers(): Promise<User[] | []> {
 		return await this.userRepository.find({});
 	}
 
-	async createUser(createUserDto: CreateUserDto): Promise<User> {
+	async createUser(createUserDto: CreateUserDto): Promise<User | undefined> {
 		return await this.userRepository.create({
 			id: uuidv4(),
 			...createUserDto,
@@ -26,7 +26,11 @@ export class UsersService {
 		});
 	}
 
-	async deleteUser(id: string): Promise<User> {
+	async deleteUser(id: string): Promise<User | undefined> {
 		return this.userRepository.deleteUser(id);
+	}
+
+	async getUserByEmail(email: string): Promise<User | undefined> {
+		return await this.userRepository.findUserByEmail(email);
 	}
 }
