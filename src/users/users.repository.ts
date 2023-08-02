@@ -5,7 +5,6 @@ import { FilterQuery, Model } from "mongoose";
 
 @Injectable()
 export class UserRepository {
-	// eslint-disable-next-line prettier/prettier
 	constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
 	async getUserById(id: string): Promise<User | undefined> {
@@ -16,6 +15,7 @@ export class UserRepository {
 			return undefined;
 		}
 	}
+
 	async find(userFilterQuery: FilterQuery<User>): Promise<User[] | []> {
 		return await this.userModel.find(userFilterQuery);
 	}
@@ -28,12 +28,14 @@ export class UserRepository {
 	async deleteUser(id: string): Promise<User | undefined> {
 		return await this.userModel.findByIdAndDelete(id);
 	}
+
 	async findOneAndUpdate(
 		userFilterQuery: FilterQuery<User>,
 		user: Partial<User>
 	): Promise<User | undefined> {
 		return await this.userModel.findOneAndUpdate(userFilterQuery, user);
 	}
+
 	async findUserByEmail(email: string): Promise<User | undefined> {
 		return await this.userModel.findOne({ email });
 	}
