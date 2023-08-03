@@ -16,7 +16,7 @@ export class Product {
 	price: number;
 
 	@Prop()
-	image: string;
+	image: Date;
 
 	@Prop()
 	publishDate: string;

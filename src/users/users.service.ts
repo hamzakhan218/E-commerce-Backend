@@ -1,11 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { Model } from "mongoose";
-import { InjectModel } from "@nestjs/mongoose";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UserRepository } from "./users.repository";
 import { User } from "./schemas/user.schema";
 import { v4 as uuidv4 } from "uuid";
 import * as argon2 from "argon2";
+
 @Injectable()
 export class UsersService {
 	constructor(private readonly userRepository: UserRepository) {}
@@ -18,12 +17,19 @@ export class UsersService {
 		return await this.userRepository.find({});
 	}
 
-	async createUser(createUserDto: CreateUserDto): Promise<User | undefined> {
-		return await this.userRepository.create({
-			id: uuidv4(),
-			...createUserDto,
-			password: await argon2.hash(createUserDto.password),
-		});
+	async createUser(createUserDto: CreateUserDto): Promise<User | string> {
+		const doesUserEsists = await this.userRepository.findUserByEmail(
+			createUserDto.email
+		);
+		if (doesUserEsists) {
+			return "User Already exists";
+		} else {
+			return await this.userRepository.create({
+				id: uuidv4(),
+				...createUserDto,
+				password: await argon2.hash(createUserDto.password),
+			});
+		}
 	}
 
 	async deleteUser(id: string): Promise<User | undefined> {

@@ -6,7 +6,6 @@ import { CreateProductDto } from "./dto/create-product.dto";
 
 @Injectable()
 export class ProductRepository {
-	// eslint-disable-next-line prettier/prettier
 	constructor(
 		@InjectModel(Product.name) private productModel: Model<ProductDocument>
 	) {}
@@ -32,22 +31,8 @@ export class ProductRepository {
 	async createProduct(
 		createProductDto: CreateProductDto
 	): Promise<Product | undefined> {
-		if (
-			createProductDto.name === undefined ||
-			createProductDto.image === undefined ||
-			createProductDto.price === undefined ||
-			createProductDto.publishDate === undefined ||
-			createProductDto.OwnerId === undefined ||
-			createProductDto.description === undefined ||
-			createProductDto.category === undefined ||
-			createProductDto.stock === undefined
-		) {
-			return undefined;
-		} else {
-			const newProduct = new this.productModel(createProductDto);
-			return await newProduct.save();
-		}
-		return undefined;
+		const newProduct = new this.productModel(createProductDto);
+		return await newProduct.save();
 	}
 
 	async deleteProduct(id: string): Promise<Product | undefined> {
