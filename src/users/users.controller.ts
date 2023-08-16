@@ -24,6 +24,13 @@ export class UsersController {
 		return this.usersService.getUserById(id);
 	}
 
+	@Get("/email/:email")
+	async getUserByEmail(
+		@Param("email") email: string
+	): Promise<User | undefined> {
+		return this.usersService.getUserByEmail(email);
+	}
+
 	@Delete(":id")
 	async deleteUser(@Param("id") id: string): Promise<User | undefined> {
 		return this.usersService.deleteUser(id);

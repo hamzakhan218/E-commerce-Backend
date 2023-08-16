@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from "@nestjs/common";
 import { ProductRepository } from "./products.repository";
 import { Product } from "./schemas/create-product.schema";
@@ -23,5 +24,9 @@ export class ProductsService {
 
 	async deleteProduct(id: string): Promise<Product | undefined> {
 		return await this.productRepository.deleteProduct(id);
+	}
+
+	async getProductsOfUser(email: string): Promise<Product[] | []> {
+		return await this.productRepository.getProductsOfUser(email);
 	}
 }
