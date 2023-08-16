@@ -1,5 +1,6 @@
 import {
 	IsDate,
+	IsDateString,
 	IsInt,
 	IsNotEmpty,
 	IsString,
@@ -26,16 +27,15 @@ export class CreateProductDto {
 	price: number;
 
 	@IsNotEmpty()
-	@IsString()
 	image: string;
 
 	@IsNotEmpty()
-	@IsDate()
+	@IsDateString()
 	publishDate: Date;
 
 	@IsNotEmpty()
 	@IsString()
-	OwnerId: string;
+	ownerEmail: string;
 
 	@IsNotEmpty()
 	@IsString()

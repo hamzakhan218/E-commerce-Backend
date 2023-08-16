@@ -16,13 +16,13 @@ export class Product {
 	price: number;
 
 	@Prop()
-	image: Date;
+	image: string;
 
 	@Prop()
-	publishDate: string;
+	publishDate: Date;
 
 	@Prop()
-	OwnerId: string;
+	ownerEmail: string;
 
 	@Prop()
 	description: string;

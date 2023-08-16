@@ -1,8 +1,7 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { UsersService } from "src/users/users.service";
 import * as argon2 from "argon2";
-import { CreateUserDto } from "src/users/dto/create-user.dto";
 
 @Injectable()
 export class AuthService {
@@ -15,7 +14,11 @@ export class AuthService {
 		const user = await this.usersService.getUserByEmail(email);
 		if (user) {
 			if (user && (await argon2.verify(user.password, password))) {
-				const payload = { sub: user.id, username: user.email };
+				const payload = {
+					sub: user.id,
+					email: user.email,
+					name: user.name,
+				};
 				return {
 					access_token: await this.jwtService.signAsync(payload),
 				};

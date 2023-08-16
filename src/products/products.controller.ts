@@ -28,4 +28,11 @@ export class ProductsController {
 	async deleteProduct(@Param("id") id: string): Promise<Product | undefined> {
 		return await this.productService.deleteProduct(id);
 	}
+
+	@Get("users/:email")
+	async getProductsOfUser(
+		@Param("email") email: string
+	): Promise<Product[] | []> {
+		return await this.productService.getProductsOfUser(email);
+	}
 }

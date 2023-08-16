@@ -10,7 +10,7 @@ export class ProductRepository {
 		@InjectModel(Product.name) private productModel: Model<ProductDocument>
 	) {}
 
-	async getAllProducts(): Promise<Product[] | undefined> {
+	async getAllProducts(): Promise<Product[] | []> {
 		try {
 			const products = await this.productModel.find();
 			return products;
@@ -41,6 +41,17 @@ export class ProductRepository {
 			return product;
 		} catch (error) {
 			return undefined;
+		}
+	}
+
+	async getProductsOfUser(email: string): Promise<Product[] | []> {
+		try {
+			const products: Product[] = await this.productModel.find({
+				ownerEmail: email,
+			});
+			return products;
+		} catch (error) {
+			return [];
 		}
 	}
 }
