@@ -8,14 +8,12 @@ export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
 	@Get()
-	async getUsers(): Promise<User[] | []> {
+	async getUsers(): Promise<{ documents: User[] | [] }> {
 		return this.usersService.getUsers();
 	}
 
 	@Post()
-	async createUser(
-		@Body() createUserDto: CreateUserDto
-	): Promise<User | string> {
+	async createUser(@Body() createUserDto: CreateUserDto) {
 		return await this.usersService.createUser(createUserDto);
 	}
 
@@ -27,12 +25,12 @@ export class UsersController {
 	@Get("/email/:email")
 	async getUserByEmail(
 		@Param("email") email: string
-	): Promise<User | undefined> {
+	): Promise<{ documents: [User] | [] }> {
 		return this.usersService.getUserByEmail(email);
 	}
 
 	@Delete(":id")
-	async deleteUser(@Param("id") id: string): Promise<User | undefined> {
+	async deleteUser(@Param("id") id: string): Promise<{ deletedCount: number }> {
 		return this.usersService.deleteUser(id);
 	}
 }

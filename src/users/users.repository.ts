@@ -9,24 +9,85 @@ export class UserRepository {
 
 	async getUserById(id: string): Promise<User | undefined> {
 		try {
-			const users = await this.userModel.findById(id);
-			return users;
+			const res = await fetch(`${process.env.MONGODB_API}/find`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					apiKey: process.env.MONGODB_API_KEY,
+				},
+				body: JSON.stringify({
+					dataSource: "Cluster0",
+					database: "E-commerce",
+					collection: "users",
+					filter: { _id: { $oid: id } },
+				}),
+			});
+			const data = await res.json();
+
+			return data;
+			// const users = await this.userModel.findById(id);
+			// return users;
 		} catch (error) {
 			return undefined;
 		}
 	}
 
-	async find(userFilterQuery: FilterQuery<User>): Promise<User[] | []> {
-		return await this.userModel.find(userFilterQuery);
+	async find(): Promise<{ documents: User[] | [] }> {
+		const res = await fetch(`${process.env.MONGODB_API}/find`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				apiKey: process.env.MONGODB_API_KEY,
+			},
+			body: JSON.stringify({
+				dataSource: "Cluster0",
+				database: "E-commerce",
+				collection: "users",
+			}),
+		});
+		const data = await res.json();
+		return data;
+		// return await this.userModel.find();
 	}
 
-	async create(user: User): Promise<User | undefined> {
-		const newUser = new this.userModel(user);
-		return await newUser.save();
+	async create(user: User): Promise<{ insertedId: string } | string> {
+		const res = await fetch(`${process.env.MONGODB_API}/insertOne`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				apiKey: process.env.MONGODB_API_KEY,
+			},
+			body: JSON.stringify({
+				dataSource: "Cluster0",
+				database: "E-commerce",
+				collection: "users",
+				document: user,
+			}),
+		});
+		const data = await res.json();
+
+		return data;
+		// const newUser = new this.userModel(user);
+		// return await newUser.save();
 	}
 
-	async deleteUser(id: string): Promise<User | undefined> {
-		return await this.userModel.findByIdAndDelete(id);
+	async deleteUser(id: string): Promise<{ deletedCount: number }> {
+		const res = await fetch(`${process.env.MONGODB_API}/deleteOne`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				apiKey: process.env.MONGODB_API_KEY,
+			},
+			body: JSON.stringify({
+				dataSource: "Cluster0",
+				database: "E-commerce",
+				collection: "users",
+				filter: { _id: { $oid: id } },
+			}),
+		});
+		const data = await res.json();
+		return data;
+		// return await this.userModel.findByIdAndDelete(id);
 	}
 
 	async findOneAndUpdate(
@@ -36,7 +97,24 @@ export class UserRepository {
 		return await this.userModel.findOneAndUpdate(userFilterQuery, user);
 	}
 
-	async findUserByEmail(email: string): Promise<User | undefined> {
-		return await this.userModel.findOne({ email });
+	async findUserByEmail(email: string): Promise<{ documents: [User] | [] }> {
+		const res = await fetch(`${process.env.MONGODB_API}/find`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				apiKey: process.env.MONGODB_API_KEY,
+			},
+			body: JSON.stringify({
+				dataSource: "Cluster0",
+				database: "E-commerce",
+				collection: "users",
+				filter: {
+					email,
+				},
+			}),
+		});
+		const data = await res.json();
+		return data;
+		// return await this.userModel.findOne({ email });
 	}
 }
