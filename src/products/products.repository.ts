@@ -12,17 +12,48 @@ export class ProductRepository {
 
 	async getAllProducts(): Promise<Product[] | []> {
 		try {
-			const products = await this.productModel.find();
-			return products;
+			const res = await fetch(`${process.env.MONGODB_API}/find`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					apiKey: process.env.MONGODB_API_KEY,
+				},
+				body: JSON.stringify({
+					dataSource: "Cluster0",
+					database: "E-commerce",
+					collection: "products",
+				}),
+			});
+			const data = await res.json();
+
+			return data;
+			// const products = await this.productModel.find();
+			// return products;
 		} catch (error) {
-			return undefined;
+			return [];
 		}
 	}
 
 	async getProduct(id: string): Promise<Product | undefined> {
 		try {
-			const product = await this.productModel.findById(id);
-			return product;
+			const res = await fetch(`${process.env.MONGODB_API}/find`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					apiKey: process.env.MONGODB_API_KEY,
+				},
+				body: JSON.stringify({
+					dataSource: "Cluster0",
+					database: "E-commerce",
+					collection: "products",
+					filter: { _id: { $oid: id } },
+				}),
+			});
+			const data = await res.json();
+
+			return data;
+			// const product = await this.productModel.findById(id);
+			// return product;
 		} catch (error) {
 			return undefined;
 		}
@@ -31,14 +62,46 @@ export class ProductRepository {
 	async createProduct(
 		createProductDto: CreateProductDto
 	): Promise<Product | undefined> {
-		const newProduct = new this.productModel(createProductDto);
-		return await newProduct.save();
+		const res = await fetch(`${process.env.MONGODB_API}/insertOne`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				apiKey: process.env.MONGODB_API_KEY,
+			},
+			body: JSON.stringify({
+				dataSource: "Cluster0",
+				database: "E-commerce",
+				collection: "products",
+				document: createProductDto,
+			}),
+		});
+		const data = await res.json();
+
+		return data;
+		// const newProduct = new this.productModel(createProductDto);
+		// return await newProduct.save();
 	}
 
 	async deleteProduct(id: string): Promise<Product | undefined> {
 		try {
-			const product = this.productModel.findByIdAndDelete(id);
-			return product;
+			const res = await fetch(`${process.env.MONGODB_API}/deleteOne`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					apiKey: process.env.MONGODB_API_KEY,
+				},
+				body: JSON.stringify({
+					dataSource: "Cluster0",
+					database: "E-commerce",
+					collection: "products",
+					filter: { _id: { $oid: id } },
+				}),
+			});
+			const data = await res.json();
+
+			return data;
+			// const product = this.productModel.findByIdAndDelete(id);
+			// return product;
 		} catch (error) {
 			return undefined;
 		}
@@ -46,10 +109,28 @@ export class ProductRepository {
 
 	async getProductsOfUser(email: string): Promise<Product[] | []> {
 		try {
-			const products: Product[] = await this.productModel.find({
-				ownerEmail: email,
+			const res = await fetch(`${process.env.MONGODB_API}/find`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					apiKey: process.env.MONGODB_API_KEY,
+				},
+				body: JSON.stringify({
+					dataSource: "Cluster0",
+					database: "E-commerce",
+					collection: "products",
+					filter: {
+						ownerEmail: email,
+					},
+				}),
 			});
-			return products;
+			const data = await res.json();
+
+			return data;
+			// const products: Product[] = await this.productModel.find({
+			// 	ownerEmail: email,
+			// });
+			// return products;
 		} catch (error) {
 			return [];
 		}

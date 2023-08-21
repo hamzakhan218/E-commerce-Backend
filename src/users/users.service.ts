@@ -13,15 +13,15 @@ export class UsersService {
 		return await this.userRepository.getUserById(userId);
 	}
 
-	async getUsers(): Promise<User[] | []> {
-		return await this.userRepository.find({});
+	async getUsers(): Promise<{ documents: User[] | [] }> {
+		return await this.userRepository.find();
 	}
 
-	async createUser(createUserDto: CreateUserDto): Promise<User | string> {
-		const doesUserEsists = await this.userRepository.findUserByEmail(
-			createUserDto.email
-		);
-		if (doesUserEsists) {
+	async createUser(createUserDto: CreateUserDto) {
+		const doesUserEsists: { documents: [User] | [] } =
+			await this.userRepository.findUserByEmail(createUserDto.email);
+
+		if (doesUserEsists.documents.length >= 1) {
 			return "User Already exists";
 		} else {
 			return await this.userRepository.create({
@@ -32,11 +32,11 @@ export class UsersService {
 		}
 	}
 
-	async deleteUser(id: string): Promise<User | undefined> {
+	async deleteUser(id: string): Promise<{ deletedCount: number }> {
 		return this.userRepository.deleteUser(id);
 	}
 
-	async getUserByEmail(email: string): Promise<User | undefined> {
+	async getUserByEmail(email: string): Promise<{ documents: [User] | [] }> {
 		return await this.userRepository.findUserByEmail(email);
 	}
 }

@@ -6,13 +6,12 @@ import { UsersModule } from "./users/users.module";
 import { AuthModule } from "./auth/auth.module";
 import { ProductsModule } from "./products/products.module";
 import { CartModule } from "./cart/cart.module";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
 	imports: [
-		MongooseModule.forRoot(
-			"mongodb+srv://hamzabashir218:swZyAi2riwSfhYeh@cluster0.ap916by.mongodb.net/?retryWrites=true&w=majority"
-			// "mongodb://localhost:27017/Ecommerce"
-		),
+		ConfigModule.forRoot(),
+		MongooseModule.forRoot(process.env.MONGODB_URL),
 		UsersModule,
 		AuthModule,
 		ProductsModule,
