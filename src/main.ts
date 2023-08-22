@@ -10,9 +10,10 @@ async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 
 	const corsOptions: CorsOptions = {
-		origin: ["*", "https://e-commerce-frontend-chi-inky.vercel.app"], // Replace with your frontend's domain
-		methods: ["GET", "POST", "PUT", "DELETE"], // Allow the necessary HTTP methods
-		credentials: true, // If your app requires credentials (e.g., cookies)
+		origin: "*",
+		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+		preflightContinue: true,
+		optionsSuccessStatus: 204,
 	};
 
 	app.enableCors(corsOptions);
