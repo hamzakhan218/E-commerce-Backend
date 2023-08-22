@@ -10,7 +10,7 @@ async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 
 	const corsOptions: CorsOptions = {
-		origin: "*",
+		origin: `'*'`,
 		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 		preflightContinue: true,
 		optionsSuccessStatus: 204,
