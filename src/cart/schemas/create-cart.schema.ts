@@ -1,22 +1,22 @@
 /* eslint-disable indent */
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+// import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { CreateProductDto } from "../../products/dto/create-product.dto";
 
-export type CartDocument = Cart & Document;
+// export type CartDocument = Cart & Document;
 
-@Schema()
-export class Cart {
-	@Prop()
+// @Schema()
+export type Cart = {
+	// @Prop()
 	id: string;
 
-	@Prop()
+	// @Prop()
 	ownerEmail: string;
 
-	@Prop()
+	// @Prop()
 	items: {
 		product: CreateProductDto;
 		quantity: number;
 	}[];
-}
+};
 
-export const cartSchema = SchemaFactory.createForClass(Cart);
+// export const cartSchema = SchemaFactory.createForClass(Cart);

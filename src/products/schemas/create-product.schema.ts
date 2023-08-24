@@ -1,40 +1,40 @@
 /* eslint-disable indent */
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+// import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { productType } from "../dto/create-product.dto";
 
-export type ProductDocument = Product & Document;
+// export type ProductDocument = Product & Document;
 
-@Schema()
-export class Product {
-	@Prop()
+// @Schema()
+export type Product = {
+	// @Prop()
 	id: string;
 
-	@Prop()
+	// @Prop()
 	name: string;
 
-	@Prop()
+	// @Prop()
 	price: number;
 
-	@Prop()
+	// @Prop()
 	image: string;
 
-	@Prop()
+	// @Prop()
 	publishDate: Date;
 
-	@Prop()
+	// @Prop()
 	ownerEmail: string;
 
-	@Prop()
+	// @Prop()
 	description: string;
 
-	@Prop()
+	// @Prop()
 	category: string;
 
-	@Prop()
+	// @Prop()
 	stock: number;
 
-	@Prop()
+	// @Prop()
 	reviews: productType[];
-}
+};
 
-export const productSchema = SchemaFactory.createForClass(Product);
+// export const productSchema = SchemaFactory.createForClass(Product);
