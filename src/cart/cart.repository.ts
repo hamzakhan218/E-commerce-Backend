@@ -1,12 +1,12 @@
 import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { Cart, CartDocument } from "./schemas/create-cart.schema";
+// import { InjectModel } from "@nestjs/mongoose";
+// import { Model } from "mongoose";
+import { Cart } from "./schemas/create-cart.schema";
 import { CreateCartDto } from "./dto/create-cart.dto";
 
 @Injectable()
 export class CartRepository {
-	constructor(@InjectModel(Cart.name) private cartModel: Model<CartDocument>) {}
+	// constructor(@InjectModel(Cart.name) private cartModel: Model<CartDocument>) {}
 
 	async getCart(): Promise<Cart[] | []> {
 		try {

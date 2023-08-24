@@ -1,21 +1,20 @@
 /* eslint-disable indent */
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+// import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
-export type UserDocument = User & Document;
+// export type UserDocument = User & Document;
 
-@Schema()
-export class User {
-	@Prop()
+export type User = {
+	// @Prop()
 	id: string;
 
-	@Prop()
+	// @Prop()
 	name: string;
 
-	@Prop()
+	// @Prop()
 	email: string;
 
-	@Prop()
+	// @Prop()
 	password: string;
-}
+};
 
-export const userSchema = SchemaFactory.createForClass(User);
+// export const userSchema = SchemaFactory.createForClass(User);

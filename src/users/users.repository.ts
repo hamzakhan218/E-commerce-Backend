@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { User, UserDocument } from "./schemas/user.schema";
+// import { InjectModel } from "@nestjs/mongoose";
+import { User } from "./schemas/user.schema";
 import { FilterQuery, Model } from "mongoose";
 
 @Injectable()
 export class UserRepository {
-	constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+	// constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
 	async getUserById(id: string): Promise<User | undefined> {
 		try {
@@ -90,12 +91,12 @@ export class UserRepository {
 		// return await this.userModel.findByIdAndDelete(id);
 	}
 
-	async findOneAndUpdate(
-		userFilterQuery: FilterQuery<User>,
-		user: Partial<User>
-	): Promise<User | undefined> {
-		return await this.userModel.findOneAndUpdate(userFilterQuery, user);
-	}
+	// async findOneAndUpdate(
+	// 	userFilterQuery: FilterQuery<User>,
+	// 	user: Partial<User>
+	// ): Promise<User | undefined> {
+	// 	return await this.userModel.findOneAndUpdate(userFilterQuery, user);
+	// }
 
 	async findUserByEmail(email: string): Promise<{ documents: [User] | [] }> {
 		const res = await fetch(`${process.env.MONGODB_API}/find`, {
