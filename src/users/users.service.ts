@@ -18,11 +18,13 @@ export class UsersService {
 	}
 
 	async createUser(createUserDto: CreateUserDto) {
-		const doesUserEsists: { documents: [User] | [] } =
+		const doesUserExists: { documents: [User] | [] } =
 			await this.userRepository.findUserByEmail(createUserDto.email);
 
-		if (doesUserEsists.documents.length >= 1) {
-			return "User Already exists";
+		if (doesUserExists.documents.length >= 1) {
+			return {
+				insertedId: undefined,
+			};
 		} else {
 			return await this.userRepository.create({
 				id: uuidv4(),
