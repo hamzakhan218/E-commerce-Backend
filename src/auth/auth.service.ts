@@ -23,11 +23,18 @@ export class AuthService {
 				};
 				return {
 					access_token: await this.jwtService.signAsync(payload),
+					message: "User logged in.",
 				};
 			}
-			return "Invalid email or password!";
+			return {
+				access_token: undefined,
+				message: "Invalid email or password!",
+			};
 		} else {
-			return "User not found";
+			return {
+				access_token: undefined,
+				message: "User not found",
+			};
 		}
 	}
 }
